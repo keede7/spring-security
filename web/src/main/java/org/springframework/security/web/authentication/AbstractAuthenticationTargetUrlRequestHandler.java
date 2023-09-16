@@ -83,21 +83,12 @@ public abstract class AbstractAuthenticationTargetUrlRequestHandler {
 	 */
 	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		String targetUrl = determineTargetUrl(request, response, authentication);
+		String targetUrl = determineTargetUrl(request, response);
 		if (response.isCommitted()) {
 			this.logger.debug(LogMessage.format("Did not redirect to %s since response already committed.", targetUrl));
 			return;
 		}
 		this.redirectStrategy.sendRedirect(request, response, targetUrl);
-	}
-
-	/**
-	 * Builds the target URL according to the logic defined in the main class Javadoc
-	 * @since 5.2
-	 */
-	protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) {
-		return determineTargetUrl(request, response);
 	}
 
 	/**
